@@ -33,16 +33,27 @@ const Index = () => {
   }, []);
 
   const handleAddProduct = (product) => {
-    setSelectedProducts((prevProducts) => {
-      const existingProduct = prevProducts.find((p) => p.id === product.id);
-      if (existingProduct) {
-        return prevProducts.map((p) =>
-          p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
-        );
-      } else {
-        return [...prevProducts, { ...product, quantity: 1 }];
-      }
-    });
+    try {
+      setSelectedProducts((prevProducts) => {
+        const existingProduct = prevProducts.find((p) => p.id === product.id);
+        if (existingProduct) {
+          return prevProducts.map((p) =>
+            p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+          );
+        } else {
+          return [...prevProducts, { ...product, quantity: 1 }];
+        }
+      });
+    } catch (error) {
+      console.error("Error adding product:", error);
+      toast({
+        title: "Error",
+        description: "An error occurred while adding the product.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   const handleRemoveProduct = (productId) => {
@@ -176,7 +187,7 @@ const Index = () => {
             </Button>
           </HStack>
         </Box>
-        <Button colorScheme="green" bg="teal.700" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "lg" }} _hover={{ transform: "scale(1.1)", bg: "teal.800" }} transition="transform 0.2s ease-in-out">
+        <Button colorScheme="green" bg="teal.800" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "lg" }} _hover={{ transform: "scale(1.1)", bg: "teal.900" }} transition="transform 0.2s ease-in-out" p={{ base: 4, md: 6 }}>
           Siparişi Tamamla ve Gönder
         </Button>
         <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg">
