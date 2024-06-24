@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, VStack, Text, Select, Button, useToast, HStack, Box, Image, Input } from "@chakra-ui/react";
+import { Container, VStack, Text, Select, Button, useToast, HStack, Box, Image, Input, Heading, Flex, Spacer } from "@chakra-ui/react";
 
 const Index = () => {
   const [products, setProducts] = useState([]);
@@ -116,27 +116,30 @@ const Index = () => {
   const totalAmount = selectedProducts.reduce((total, product) => total + (product.discountedPrice || product.price) * product.quantity, 0);
 
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={4} bg="gray.50">
       <VStack spacing={4}>
-        <Text fontSize="2xl">Sipariş Oluştur</Text>
-        <Select placeholder="Müşteri Seç" onChange={(e) => setSelectedCustomer(e.target.value)}>
-          {customers.map((customer) => (
-            <option key={customer.id} value={customer.id}>
-              {customer.name}
-            </option>
-          ))}
-        </Select>
-        {selectedCustomer && (
-          <Box>
-            <Text>Cari Hesap Kodu: {selectedCustomer.accountCode}</Text>
-            <Text>Türü: {selectedCustomer.type}</Text>
-            <Text>Adı: {selectedCustomer.name}</Text>
-          </Box>
-        )}
-        <Box>
+        <Heading as="h1" size="xl" mb={6}>Sipariş Oluştur</Heading>
+        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md" mb={4}>
+          <Text fontSize="2xl">Müşteri Seç</Text>
+          <Select placeholder="Müşteri Seç" onChange={(e) => setSelectedCustomer(e.target.value)}>
+            {customers.map((customer) => (
+              <option key={customer.id} value={customer.id}>
+                {customer.name}
+              </option>
+            ))}
+          </Select>
+          {selectedCustomer && (
+            <Box mt={4}>
+              <Text>Cari Hesap Kodu: {selectedCustomer.accountCode}</Text>
+              <Text>Türü: {selectedCustomer.type}</Text>
+              <Text>Adı: {selectedCustomer.name}</Text>
+            </Box>
+          )}
+        </Box>
+        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md" mb={4}>
           <Text fontSize="xl">Seçilen Ürünler</Text>
           {selectedProducts.map((product) => (
-            <HStack key={product.id} spacing={4}>
+            <HStack key={product.id} spacing={4} mb={2}>
               <Text>{product.name}</Text>
               <Input
                 type="number"
@@ -152,7 +155,7 @@ const Index = () => {
           <Text>Toplam Miktar: {totalQuantity}</Text>
           <Text>Toplam Tutar: {totalAmount.toFixed(2)} TL</Text>
         </Box>
-        <Box>
+        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md" mb={4}>
           <Text fontSize="xl">İskonto Uygula</Text>
           <Input
             type="number"
@@ -160,17 +163,17 @@ const Index = () => {
             onChange={(e) => setDiscount(parseInt(e.target.value))}
             width="60px"
           />
-          <Button colorScheme="blue" onClick={handleApplyDiscount}>
+          <Button colorScheme="blue" onClick={handleApplyDiscount} mt={2}>
             Uygula
           </Button>
         </Box>
-        <Button colorScheme="green" onClick={handleCreateOrder}>
+        <Button colorScheme="green" onClick={handleCreateOrder} mb={4}>
           Siparişi Tamamla ve Gönder
         </Button>
-        <Box>
+        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md">
           <Text fontSize="xl">Ürünler</Text>
           {products.map((product) => (
-            <HStack key={product.id} spacing={4}>
+            <HStack key={product.id} spacing={4} mb={2}>
               <Image src={product.image} boxSize="50px" />
               <Text>{product.name}</Text>
               <Text>{product.price} TL</Text>
