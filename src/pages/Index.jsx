@@ -187,7 +187,7 @@ const Index = () => {
             </Button>
           </HStack>
         </Box>
-        <Button colorScheme="green" bg="teal.800" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "lg" }} _hover={{ transform: "scale(1.1)", bg: "teal.900" }} transition="transform 0.2s ease-in-out" p={{ base: 4, md: 6 }}>
+        <Button colorScheme="green" bg="teal.800" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "lg" }} _hover={{ transform: "scale(1.1)", bg: "teal.900" }} transition="transform 0.2s ease-in-out" p={{ base: 4, md: 6 }} fontSize={{ base: "md", md: "lg" }}>
           Siparişi Tamamla ve Gönder
         </Button>
         <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg">
