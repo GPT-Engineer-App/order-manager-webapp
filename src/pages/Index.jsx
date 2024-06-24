@@ -9,6 +9,7 @@ const Index = () => {
   const [selectedCustomer, setSelectedCustomer] = useState("");
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [discount, setDiscount] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
   const toast = useToast();
 
   useEffect(() => {
@@ -62,9 +63,12 @@ const Index = () => {
     setSelectedProducts((prevProducts) =>
       prevProducts.map((product) => ({
         ...product,
+        originalPrice: product.price,
         discountedPrice: product.price - (product.price * discount) / 100,
       }))
     );
+    const totalDiscountAmount = selectedProducts.reduce((total, product) => total + (product.price * discount) / 100 * product.quantity, 0);
+    setDiscountAmount(totalDiscountAmount);
   };
 
   const handleCreateOrder = async () => {
@@ -121,7 +125,7 @@ const Index = () => {
   return (
     <Container centerContent maxW="container.lg" w="100%" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={8} bgGradient="linear(to-r, teal.500, green.500)">
       <VStack spacing={{ base: 4, md: 6 }} w="100%" maxW={{ base: "100%", md: "80%" }}>
-        <Heading as="h1" size="2xl" mb={8} fontFamily="heading" bgGradient="linear(to-r, teal.700, green.500)" bgClip="text">
+        <Heading as="h1" size="2xl" mb={8} fontFamily="heading" bgGradient="linear(to-r, teal.700, green.500)" bgClip="text" fontSize={{ base: "3xl", md: "4xl" }} p={{ base: 2, md: 4 }}>
           Sipariş Oluştur
         </Heading>
         <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg" mb={6}>
@@ -155,9 +159,12 @@ const Index = () => {
               <Button colorScheme="red" onClick={() => handleRemoveProduct(product.id)} size={{ base: "sm", md: "md" }}>
                 Kaldır
               </Button>
+              <Text fontSize="xl" fontFamily="body" color="teal.800">
+                <span style={{ textDecoration: 'line-through' }}>{product.originalPrice} TL</span> {product.discountedPrice.toFixed(2)} TL
+              </Text>
             </HStack>
           ))}
-          <Text fontSize="xl" fontFamily="body" color="teal.800">Toplam Miktar: {totalQuantity}</Text>
+          <Text fontSize="xl" fontFamily="body" color="teal.800">Toplam İskonto: {discountAmount.toFixed(2)} TL ({discount}%)</Text>
           <Text fontSize="xl" fontFamily="body" color="teal.800">Toplam Tutar: {totalAmount.toFixed(2)} TL</Text>
         </Box>
         <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg" mb={6}>
@@ -169,7 +176,7 @@ const Index = () => {
             </Button>
           </HStack>
         </Box>
-        <Button colorScheme="green" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
+        <Button colorScheme="green" bg="teal.700" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
           Siparişi Tamamla ve Gönder
         </Button>
         <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg">
