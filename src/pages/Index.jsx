@@ -11,6 +11,8 @@ const Index = () => {
   const toast = useToast();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     // Demo data for products and customers
     const demoProducts = [
       { id: 1, name: "Product 1", price: 100, unit: "pcs", stock: 50, category: "Category A", image: "https://via.placeholder.com/50" },
@@ -116,11 +118,13 @@ const Index = () => {
   const totalAmount = selectedProducts.reduce((total, product) => total + (product.discountedPrice || product.price) * product.quantity, 0);
 
   return (
-    <Container centerContent maxW="container.lg" w="100%" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={8} bg="white">
-      <VStack spacing={{ base: 4, md: 6 }}>
-        <Heading as="h1" size="2xl" mb={8} fontFamily="heading" color="brand.700">Sipariş Oluştur</Heading>
-        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="lg" borderRadius="lg" mb={6}>
-          <Text fontSize="2xl" fontFamily="body" color="brand.800">Müşteri Seç</Text>
+    <Container centerContent maxW="container.lg" w="100%" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={8} bgGradient="linear(to-r, brand.600, brand.500)">
+      <VStack spacing={{ base: 4, md: 6 }} w="100%" maxW={{ base: "100%", md: "80%" }}>
+        <Heading as="h1" size="2xl" mb={8} fontFamily="heading" bgGradient="linear(to-r, brand.700, brand.500)" bgClip="text">
+          Sipariş Oluştur
+        </Heading>
+        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg" mb={6}>
+          <Text fontSize="xl" fontFamily="body" color="brand.800">Müşteri Seç</Text>
           <Select placeholder="Müşteri Seç" onChange={(e) => setSelectedCustomer(e.target.value)}>
             {customers.map((customer) => (
               <option key={customer.id} value={customer.id}>
@@ -130,17 +134,17 @@ const Index = () => {
           </Select>
           {selectedCustomer && (
             <Box mt={4}>
-              <Text>Cari Hesap Kodu: {selectedCustomer.accountCode}</Text>
-              <Text>Türü: {selectedCustomer.type}</Text>
-              <Text>Adı: {selectedCustomer.name}</Text>
+              <Text fontSize="xl" fontFamily="body" color="brand.800">Cari Hesap Kodu: {selectedCustomer.accountCode}</Text>
+              <Text fontSize="xl" fontFamily="body" color="brand.800">Türü: {selectedCustomer.type}</Text>
+              <Text fontSize="xl" fontFamily="body" color="brand.800">Adı: {selectedCustomer.name}</Text>
             </Box>
           )}
         </Box>
-        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="lg" borderRadius="lg" mb={6}>
-          <Text fontSize="xl">Seçilen Ürünler</Text>
+        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg" mb={6}>
+          <Text fontSize="xl" fontFamily="body" color="brand.800">Seçilen Ürünler</Text>
           {selectedProducts.map((product) => (
-            <HStack key={product.id} spacing={{ base: 2, md: 4 }} mb={2} flexWrap="wrap">
-              <Text>{product.name}</Text>
+            <HStack key={product.id} spacing={{ base: 2, md: 4 }} mb={2} flexWrap="wrap" _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
+              <Text fontSize="xl" fontFamily="body" color="brand.800">{product.name}</Text>
               <Input
                 type="number"
                 value={product.quantity}
@@ -152,35 +156,32 @@ const Index = () => {
               </Button>
             </HStack>
           ))}
-          <Text>Toplam Miktar: {totalQuantity}</Text>
-          <Text>Toplam Tutar: {totalAmount.toFixed(2)} TL</Text>
+          <Text fontSize="xl" fontFamily="body" color="brand.800">Toplam Miktar: {totalQuantity}</Text>
+          <Text fontSize="xl" fontFamily="body" color="brand.800">Toplam Tutar: {totalAmount.toFixed(2)} TL</Text>
         </Box>
-        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="lg" borderRadius="lg" mb={6}>
-          <Text fontSize="xl">İskonto Uygula</Text>
-          <Input
-            type="number"
-            value={discount}
-            onChange={(e) => setDiscount(parseInt(e.target.value))}
-            width={{ base: "50px", md: "60px" }}
-          />
-          <Button colorScheme="blue" onClick={handleApplyDiscount} mt={2} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
-            Uygula
-          </Button>
+        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg" mb={6}>
+          <Text fontSize="xl" fontFamily="body" color="brand.800">İskonto Uygula</Text>
+          <HStack spacing={4}>
+            <Input type="number" value={discount} onChange={(e) => setDiscount(parseInt(e.target.value))} width={{ base: "50px", md: "60px" }} />
+            <Button colorScheme="blue" onClick={handleApplyDiscount} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.1)", bg: "brand.700" }} transition="transform 0.2s ease-in-out">
+              Uygula
+            </Button>
+          </HStack>
         </Box>
         <Button colorScheme="green" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
           Siparişi Tamamla ve Gönder
         </Button>
-        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="lg" borderRadius="lg">
-          <Text fontSize="xl">Ürünler</Text>
+        <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg">
+          <Text fontSize="xl" fontFamily="body" color="brand.800">Ürünler</Text>
           {products.map((product) => (
-            <HStack key={product.id} spacing={{ base: 2, md: 4 }} mb={2} flexWrap="wrap">
+            <HStack key={product.id} spacing={{ base: 2, md: 4 }} mb={2} flexWrap="wrap" _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
               <Image src={product.image} boxSize={{ base: "40px", md: "50px" }} />
-              <Text>{product.name}</Text>
-              <Text>{product.price} TL</Text>
-              <Text>{product.unit}</Text>
-              <Text>Kalan Stok: {product.stock}</Text>
-              <Text>Kategori: {product.category}</Text>
-              <Button colorScheme="blue" onClick={() => handleAddProduct(product)} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
+              <Text fontSize="xl" fontFamily="body" color="brand.800">{product.name}</Text>
+              <Text fontSize="xl" fontFamily="body" color="brand.800">{product.price} TL</Text>
+              <Text fontSize="xl" fontFamily="body" color="brand.800">{product.unit}</Text>
+              <Text fontSize="xl" fontFamily="body" color="brand.800">Kalan Stok: {product.stock}</Text>
+              <Text fontSize="xl" fontFamily="body" color="brand.800">Kategori: {product.category}</Text>
+              <Button colorScheme="blue" onClick={() => handleAddProduct(product)} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.1)", bg: "brand.700" }} transition="transform 0.2s ease-in-out">
                 Ekle
               </Button>
             </HStack>
