@@ -116,10 +116,10 @@ const Index = () => {
   const totalAmount = selectedProducts.reduce((total, product) => total + (product.discountedPrice || product.price) * product.quantity, 0);
 
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={4} bg="gray.50">
-      <VStack spacing={4}>
+    <Container centerContent maxW="container.lg" w="100%" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={4} bg="gray.50">
+      <VStack spacing={{ base: 4, md: 6 }}>
         <Heading as="h1" size="xl" mb={6}>Sipariş Oluştur</Heading>
-        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md" mb={4}>
+        <Box w="100%" p={{ base: 4, md: 6 }} bg="white" boxShadow="md" borderRadius="md" mb={4}>
           <Text fontSize="2xl">Müşteri Seç</Text>
           <Select placeholder="Müşteri Seç" onChange={(e) => setSelectedCustomer(e.target.value)}>
             {customers.map((customer) => (
@@ -136,18 +136,18 @@ const Index = () => {
             </Box>
           )}
         </Box>
-        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md" mb={4}>
+        <Box w="100%" p={{ base: 4, md: 6 }} bg="white" boxShadow="md" borderRadius="md" mb={4}>
           <Text fontSize="xl">Seçilen Ürünler</Text>
           {selectedProducts.map((product) => (
-            <HStack key={product.id} spacing={4} mb={2}>
+            <HStack key={product.id} spacing={{ base: 2, md: 4 }} mb={2} flexWrap="wrap">
               <Text>{product.name}</Text>
               <Input
                 type="number"
                 value={product.quantity}
                 onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
-                width="60px"
+                width={{ base: "50px", md: "60px" }}
               />
-              <Button colorScheme="red" onClick={() => handleRemoveProduct(product.id)}>
+              <Button colorScheme="red" onClick={() => handleRemoveProduct(product.id)} size={{ base: "sm", md: "md" }}>
                 Kaldır
               </Button>
             </HStack>
@@ -155,32 +155,32 @@ const Index = () => {
           <Text>Toplam Miktar: {totalQuantity}</Text>
           <Text>Toplam Tutar: {totalAmount.toFixed(2)} TL</Text>
         </Box>
-        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md" mb={4}>
+        <Box w="100%" p={{ base: 4, md: 6 }} bg="white" boxShadow="md" borderRadius="md" mb={4}>
           <Text fontSize="xl">İskonto Uygula</Text>
           <Input
             type="number"
             value={discount}
             onChange={(e) => setDiscount(parseInt(e.target.value))}
-            width="60px"
+            width={{ base: "50px", md: "60px" }}
           />
-          <Button colorScheme="blue" onClick={handleApplyDiscount} mt={2}>
+          <Button colorScheme="blue" onClick={handleApplyDiscount} mt={2} size={{ base: "sm", md: "md" }}>
             Uygula
           </Button>
         </Box>
-        <Button colorScheme="green" onClick={handleCreateOrder} mb={4}>
+        <Button colorScheme="green" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "md" }}>
           Siparişi Tamamla ve Gönder
         </Button>
-        <Box w="100%" p={4} bg="white" boxShadow="md" borderRadius="md">
+        <Box w="100%" p={{ base: 4, md: 6 }} bg="white" boxShadow="md" borderRadius="md">
           <Text fontSize="xl">Ürünler</Text>
           {products.map((product) => (
-            <HStack key={product.id} spacing={4} mb={2}>
-              <Image src={product.image} boxSize="50px" />
+            <HStack key={product.id} spacing={{ base: 2, md: 4 }} mb={2} flexWrap="wrap">
+              <Image src={product.image} boxSize={{ base: "40px", md: "50px" }} />
               <Text>{product.name}</Text>
               <Text>{product.price} TL</Text>
               <Text>{product.unit}</Text>
               <Text>Kalan Stok: {product.stock}</Text>
               <Text>Kategori: {product.category}</Text>
-              <Button colorScheme="blue" onClick={() => handleAddProduct(product)}>
+              <Button colorScheme="blue" onClick={() => handleAddProduct(product)} size={{ base: "sm", md: "md" }}>
                 Ekle
               </Button>
             </HStack>
