@@ -11,29 +11,21 @@ const Index = () => {
   const toast = useToast();
 
   useEffect(() => {
-    // Fetch products and customers from the server
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("https://example.com/api/products");
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Ürünler alınırken hata oluştu:", error);
-      }
-    };
+    // Demo data for products and customers
+    const demoProducts = [
+      { id: 1, name: "Product 1", price: 100, unit: "pcs", stock: 50, category: "Category A", image: "https://via.placeholder.com/50" },
+      { id: 2, name: "Product 2", price: 200, unit: "pcs", stock: 30, category: "Category B", image: "https://via.placeholder.com/50" },
+      { id: 3, name: "Product 3", price: 150, unit: "pcs", stock: 20, category: "Category C", image: "https://via.placeholder.com/50" },
+    ];
 
-    const fetchCustomers = async () => {
-      try {
-        const response = await fetch("https://example.com/api/customers");
-        const data = await response.json();
-        setCustomers(data);
-      } catch (error) {
-        console.error("Müşteriler alınırken hata oluştu:", error);
-      }
-    };
+    const demoCustomers = [
+      { id: 1, name: "Customer 1", accountCode: "C001", type: "Retail" },
+      { id: 2, name: "Customer 2", accountCode: "C002", type: "Wholesale" },
+      { id: 3, name: "Customer 3", accountCode: "C003", type: "Retail" },
+    ];
 
-    fetchProducts();
-    fetchCustomers();
+    setProducts(demoProducts);
+    setCustomers(demoCustomers);
   }, []);
 
   const handleAddProduct = (product) => {
