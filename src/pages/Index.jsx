@@ -125,7 +125,7 @@ const Index = () => {
   return (
     <Container centerContent maxW="container.lg" w="100%" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={8} bgGradient="linear(to-r, teal.500, green.500)">
       <VStack spacing={{ base: 4, md: 6 }} w="100%" maxW={{ base: "100%", md: "80%" }}>
-        <Heading as="h1" size="2xl" mb={8} fontFamily="heading" bgGradient="linear(to-r, teal.700, green.500)" bgClip="text" fontSize={{ base: "3xl", md: "4xl" }} p={{ base: 2, md: 4 }}>
+        <Heading as="h1" size="2xl" mb={8} fontFamily="heading" bgGradient="linear(to-r, teal.700, green.500)" bgClip="text" fontSize={{ base: "3xl", md: "4xl" }} p={{ base: 2, md: 4 }} textAlign="center">
           Sipariş Oluştur
         </Heading>
         <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg" mb={6}>
@@ -139,9 +139,9 @@ const Index = () => {
           </Select>
           {selectedCustomer && (
             <Box mt={4}>
-              <Text fontSize="xl" fontFamily="body" color="teal.800">Cari Hesap Kodu: {selectedCustomer.accountCode}</Text>
-              <Text fontSize="xl" fontFamily="body" color="teal.800">Türü: {selectedCustomer.type}</Text>
-              <Text fontSize="xl" fontFamily="body" color="teal.800">Adı: {selectedCustomer.name}</Text>
+              <Text fontSize="xl" fontFamily="body" color="teal.800">Cari Hesap Kodu: {customers.find(c => c.id === parseInt(selectedCustomer)).accountCode}</Text>
+              <Text fontSize="xl" fontFamily="body" color="teal.800">Türü: {customers.find(c => c.id === parseInt(selectedCustomer)).type}</Text>
+              <Text fontSize="xl" fontFamily="body" color="teal.800">Adı: {customers.find(c => c.id === parseInt(selectedCustomer)).name}</Text>
             </Box>
           )}
         </Box>
@@ -176,7 +176,7 @@ const Index = () => {
             </Button>
           </HStack>
         </Box>
-        <Button colorScheme="green" bg="teal.700" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "md" }} _hover={{ transform: "scale(1.05)" }} transition="transform 0.2s ease-in-out">
+        <Button colorScheme="green" bg="teal.700" onClick={handleCreateOrder} mb={4} size={{ base: "sm", md: "lg" }} _hover={{ transform: "scale(1.1)" }} transition="transform 0.2s ease-in-out">
           Siparişi Tamamla ve Gönder
         </Button>
         <Box w="100%" p={{ base: 6, md: 8 }} bg="gray.100" boxShadow="xl" borderRadius="lg">
